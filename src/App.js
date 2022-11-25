@@ -1,19 +1,11 @@
 import { useState, useEffect } from "react";
 import './App.css';
-import { invoke } from '@tauri-apps/api/tauri'
-import { listen } from '@tauri-apps/api/event'
 import TitleBar from "./components/Title Bar/titlebar";
 import NotifyWindow from './components/Notifications/notify'
 import Settings from './components/Settings/settings'
 import VideoPlayer from "./components/Video Player/videoplayer";
 
 import './App.dark.css';
-
-import { remote, ipcRenderer } from 'electron';
-import { dialog } from '@electron/remote'
-import  currentWindow from '@electron/remote'
-import fs from 'fs'
-import path from "path"
 
 var titleMenuBarSpace = 25;
 
@@ -82,7 +74,7 @@ function Header(props) {
       var data = JSON.parse(dataraw).props
       var index = JSON.parse(dataraw).index
       if (!data.docs.docs[index].saved) {
-        var UnsavedDialog = dialog.showMessageBox(currentWindow.BrowserWindow.getFocusedWindow(), {
+        /*var UnsavedDialog = dialog.showMessageBox(currentWindow.BrowserWindow.getFocusedWindow(), {
           type: 'question',
           buttons: ['Save', 'Discard', 'Cancel'],
           defaultId: 0,
@@ -101,7 +93,7 @@ function Header(props) {
             } else {
               CloseTabAftDialog(false)
             }
-          })
+          })*/
       } else {
         CloseTabAftDialog(true)
       }
@@ -190,27 +182,27 @@ function App() {
     if (!(navigator.userAgent === 'IncogineEditor-Electron')) {
       setnotifyNotTauri(true)
     }
-    ipcRenderer.send('get-fromstorage', { callbackname: 'theme', key: 'theme' })
+    //ipcRenderer.send('get-fromstorage', { callbackname: 'theme', key: 'theme' })
 
-    ipcRenderer.on('get-fromstorage-reply', (event, got) => {
+    /*ipcRenderer.on('get-fromstorage-reply', (event, got) => {
       let realgot = String(got).split(";")
       console.log(realgot)
       if (realgot[0] === "theme") {
         document.documentElement.setAttribute("data-theme", realgot[1]);
       }
-    })
+    })*/
   }, [])
 
   function SaveFile(after) {
     let oldprops = [...docsState.docs];
 
     async function saveFileAs(event, data) {
-      var saveDialogRes = await dialog.showSaveDialog(currentWindow.BrowserWindow.getFocusedWindow(), { title: "Save File: " + JSON.parse(data).fileName, defaultPath: `${JSON.parse(data).fileName}`, properties: ['createDirectory', 'showHiddenFiles'] })
+      /*var saveDialogRes = await dialog.showSaveDialog(currentWindow.BrowserWindow.getFocusedWindow(), { title: "Save File: " + JSON.parse(data).fileName, defaultPath: `${JSON.parse(data).fileName}`, properties: ['createDirectory', 'showHiddenFiles'] })
       if (!saveDialogRes.canceled) {
         return saveDialogRes.filePath
       } else {
         return false
-      }
+      }*/
     }
 
     if (docsState.docs[docsState.selected].type === "text/code") {
@@ -233,7 +225,7 @@ function App() {
 
     function savedFile(paths) {
       var newpath = paths?.toString()
-      fs.writeFile(newpath, docsState.docs[docsState.selected].content, (err, data) => {
+      /*fs.writeFile(newpath, docsState.docs[docsState.selected].content, (err, data) => {
         if (err) {
           console.error(err)
         } else {
@@ -252,14 +244,14 @@ function App() {
             setDocsState({ selected: docsState.selected, docs: [...oldprops] })
           }
         }
-      })
+      })*/
     }
   }
   window.SaveFile = SaveFile;
 
   function OpenFile() {
     async function openFile(event, data) {
-      var openDialogRes = await dialog.showOpenDialog(currentWindow.BrowserWindow.getFocusedWindow(), {
+      /*var openDialogRes = await dialog.showOpenDialog(currentWindow.BrowserWindow.getFocusedWindow(), {
         title: "Open File", filters: [
           {
             "name": "all",
@@ -293,7 +285,7 @@ function App() {
         return openDialogRes.filePaths
       } else {
         return false
-      }
+      }*/
     }
 
     openFile()
@@ -307,7 +299,7 @@ function App() {
 
     function openedFile(paths) {
       console.log(paths[0])
-      var stats = fs.statSync(paths[0])
+      /*var stats = fs.statSync(paths[0])
       if (stats["size"] < 1000000) {
         // 1 MB of File
         fs.readFile(paths[0], "utf-8", function (err, data) {
@@ -330,7 +322,7 @@ function App() {
         })
       } else {
         console.error("File not opened: Too large")
-      }
+      }*/
     }
   }
   window.OpenFile = OpenFile;
@@ -375,9 +367,9 @@ function App() {
       }
     }
 
-    listen('file-drop', event => {
+    /*listen('file-drop', event => {
       invoke('my_custom_command', { invokeMessage: event })
-    })
+    })*/
 
     document.addEventListener("keydown", saveKeyDown);
     document.addEventListener("drop", handleDropFile);
@@ -399,7 +391,6 @@ function App() {
           {docsState.docs[docsState.selected].type === "settings" ? <Settings winsize={winsize} docs={docsState} setDocs={setDocsState} /> : null}
         </article>
       </section>
-      {notifyNotTauri ? <NotifyWindow header={"You are using a browser version of Incogine Editor"} body={"Please switch to the application for more features"} accept={() => setnotifyNotTauri(false)} /> : null}
       <Footer docs={docsState} />
     </div>
   );
