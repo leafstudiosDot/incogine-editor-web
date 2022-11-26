@@ -156,8 +156,7 @@ function App() {
     ]
   });
   const winsize = useWindowSize();
-
-  const [notifyNotTauri, setnotifyNotTauri] = useState(false);
+  const [hasAllPerms, setHasAllPerms] = useState(false);
 
   window.SettingsPage = function (content) {
     if (!docsState.docs.some(doc => doc.type === "settings")) {
@@ -179,9 +178,6 @@ function App() {
   }
 
   useEffect(() => {
-    if (!(navigator.userAgent === 'IncogineEditor-Electron')) {
-      setnotifyNotTauri(true)
-    }
     //ipcRenderer.send('get-fromstorage', { callbackname: 'theme', key: 'theme' })
 
     /*ipcRenderer.on('get-fromstorage-reply', (event, got) => {
@@ -191,6 +187,17 @@ function App() {
         document.documentElement.setAttribute("data-theme", realgot[1]);
       }
     })*/
+
+    function verifyPermission() {
+      if ('showOpenFilePicker' in window) {
+        setHasAllPerms(true)
+      } else {
+        setHasAllPerms(false)
+      }
+    }
+
+    verifyPermission();
+
   }, [])
 
   function SaveFile(after) {
