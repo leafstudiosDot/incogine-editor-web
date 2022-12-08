@@ -20,7 +20,6 @@ jobs:
       uses: actions/setup-node@v3
       with:
         node-version: '19.x'
-    - run: npm ci
     - name: Build React
       run: CI=false npm run build
     - name: Upload to Build Artifacts
