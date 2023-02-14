@@ -1,4 +1,3 @@
-import { ipcRenderer } from 'electron';
 import { useState, useEffect, useCallback } from 'react';
 import axios from 'axios'
 import './settings.css';
@@ -28,8 +27,8 @@ function SettingList(props) {
 
     useEffect(() => {
         let oldsetlist = [...settingList]
-        ipcRenderer.send('getExtSettings')
-        ipcRenderer.on('getExtSettings-reply', async function (e, got) {
+        //ipcRenderer.send('getExtSettings')
+        /*ipcRenderer.on('getExtSettings-reply', async function (e, got) {
 
             got.map((ext) => {
                 oldsetlist.push({
@@ -46,7 +45,7 @@ function SettingList(props) {
                 })
             })
 
-        })
+        })*/
     }, [])
 
     let oldprops = [...props.docs.docs];
@@ -99,7 +98,7 @@ function SettingWindow(props) {
     // Effects
     useEffect(() => {
         // Misc
-        ipcRenderer.on('get-fromstorage-reply', (event, got) => {
+        /*ipcRenderer.on('get-fromstorage-reply', (event, got) => {
             let realgot = String(got).split(";")
             if (realgot[0] === "vimmode") {
                 if (realgot[1] === "true") {
@@ -116,15 +115,15 @@ function SettingWindow(props) {
             } else {
                 setTheme("dark")
             }
-        })
+        })*/
     }, [])
 
     // Misc
     function AboutPage() {
         return (<div>
-            <h1>Incogine Editor v0.1.3 Open Source</h1>
+            <h1>Incogine Editor v0.1.3 Open Source (Web)</h1>
             <span>© 2022 leafstudiosDot. All rights reserved</span><br />
-            <span>Incogine Editor powered by <span onClick={() => ipcRenderer.send('openLink', 'https://www.electronjs.org/')}>Electron</span> and other open-source projects</span>
+            <span>Incogine Editor powered by <span onClick={() => {}/*ipcRenderer.send('openLink', 'https://www.electronjs.org/')*/}>Electron</span> and other open-source projects</span>
         </div>)
     }
 
@@ -132,8 +131,8 @@ function SettingWindow(props) {
         function ThemeChange(theme) {
             setTheme(theme.target.value)
             document.documentElement.setAttribute("data-theme", theme.target.value);
-            ipcRenderer.send('set-fromstorage', { key: 'theme', value: theme.target.value })
-            ipcRenderer.send('get-fromstorage', { callbackname: 'theme', key: 'theme' })
+            //ipcRenderer.send('set-fromstorage', { key: 'theme', value: theme.target.value })
+            //ipcRenderer.send('get-fromstorage', { callbackname: 'theme', key: 'theme' })
         }
 
         return (<div>
@@ -148,8 +147,8 @@ function SettingWindow(props) {
     function MiscPage() {
         function ToggleVimMode(sure) {
             setVimMode(sure)
-            ipcRenderer.send('set-fromstorage', { key: 'vimmode', value: sure })
-            ipcRenderer.send('get-fromstorage', { callbackname: 'vimmode', key: 'vimmode' })
+            //ipcRenderer.send('set-fromstorage', { key: 'vimmode', value: sure })
+            //ipcRenderer.send('get-fromstorage', { callbackname: 'vimmode', key: 'vimmode' })
         }
 
         return (<div>
@@ -168,7 +167,7 @@ function SettingWindow(props) {
 
         useEffect(() => {
             let oldsetlist = [...renderList]
-            ipcRenderer.on('getExtSettings-reply', async function (e, got) {
+            /*ipcRenderer.on('getExtSettings-reply', async function (e, got) {
 
                 got.map((ext) => {
                     return oldsetlist.push({
@@ -177,7 +176,7 @@ function SettingWindow(props) {
                     })
                 })
                 setRenderList(oldsetlist)
-            })
+            })*/
         }, [renderList])
 
         var matchrend = renderList.filter(rend => {
@@ -209,10 +208,10 @@ function SettingWindow(props) {
 
 export default function SettingsPage(props) {
     useEffect(() => {
-        ipcRenderer.send('get-fromstorage', { callbackname: 'vimmode', key: 'vimmode' })
-        ipcRenderer.send('get-fromstorage', { callbackname: 'theme', key: 'theme' })
+        //ipcRenderer.send('get-fromstorage', { callbackname: 'vimmode', key: 'vimmode' })
+        //ipcRenderer.send('get-fromstorage', { callbackname: 'theme', key: 'theme' })
         return () => {
-            ipcRenderer.removeAllListeners('get-fromstorage-reply')
+            //ipcRenderer.removeAllListeners('get-fromstorage-reply')
         }
     })
     return (

@@ -1,0 +1,29 @@
+name: Build
+
+on:
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+
+jobs:
+  Web:
+  
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v3
+      with:
+        submodules: true
+    - run: npm install
+    - name: Node JS CI
+      uses: actions/setup-node@v3
+      with:
+        node-version: '19.x'
+    - name: Build React
+      run: CI=false npm run build
+    - name: Upload to Build Artifacts
+      uses: actions/upload-artifact@v2
+      with:
+        name: Build Artifacts (Web)
+        path: build

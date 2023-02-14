@@ -1,9 +1,10 @@
 <div id="header" align="center">
   <br />
-  <img src="./electron/icons/icon.png" alt="Incogine Editor" width="200"/>
-  <img src="./src-tauri/icons/Square310x310Logo.png" alt="Incogine Editor (macOS)" width="220"/>
+  <img src="./public/logo512.png" alt="Incogine Editor" width="200"/>
   
-  <h1>Incogine Editor</h1>
+  <h1>Incogine Editor for Web</h1>
+  This is a web edition of <a href="https://github.com/leafstudiosDot/incogine-editor">Incogine Editor</a>
+
   A multipurpose code editor for all artists, writers, mostly for developers, etc.
 </div>
 <br />
@@ -14,22 +15,19 @@
   
 </div>
 
-## Possible Ported Software Framework
-- Tauri (Rust, hoping for every Electron features)
-- Electron (JavaScript)
+## Possible Browsers
+- Chromium (Google Chrome)
 
 ## Running a software in development mode
-### Tauri (not yet stable)
-1. `yarn|npm start` (You can access the browser too but running in a Tauri window has more features)
-2. `yarn|npm run start-tauri`
-### Electron
-1. `yarn|npm start` (You can access the browser too but running in an Electron window has more features)
-2. `yarn|npm run start-electron`
+`yarn|npm start` to start a development server then go to `localhost:3613` (or replace `3613` with the one you put in `.env` file).
 
 ## Contributing
 See [Contributing file](https://github.com/leafstudiosDot/incogine-editor/blob/master/CONTRIBUTING.md) for further instructions at contributing.
 
 ## Donate
+Sponsor this project with GitHub Sponsors or donate via Ko-Fi
+
+
 [![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/I3I0GEOUS)
 
 ## License
