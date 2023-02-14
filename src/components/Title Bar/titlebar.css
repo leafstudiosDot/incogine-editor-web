@@ -1,5 +1,5 @@
 .titleBar {
-    position: fixed;
+    position: absolute;
     background-color: #1b1b1b;
     top: 0;
 }
