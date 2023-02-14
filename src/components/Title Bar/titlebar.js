@@ -9,17 +9,19 @@ function openMenu(x, y, menuOpen, setMenuOpen) {
         } else {
             console.log('clicked outside');
             setMenuOpen(false)
-            //document.body.removeEventListener('click', checkoutside)
+            document.body.removeEventListener('click', checkoutside)
+            clearInterval()
         }
     }
     if (menuOpen) {
         setMenuOpen(false)
-        //document.body.removeEventListener('click', checkoutside)
+        document.body.removeEventListener('click', checkoutside)
+        clearInterval()
     } else {
         setMenuOpen(true)
-        //setInterval(function () {
-            //document.body.addEventListener('click', checkoutside)
-        //}, 10)
+        setTimeout(function () {
+            document.body.addEventListener('click', checkoutside)
+        }, 10)
     }
 }
 
